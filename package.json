@@ -1,0 +1,32 @@
+{
+  "name": "promise",
+  "version": "0.1.0",
+  "description": "A `Promise` implementation spec-complaint optimised for readability.",
+  "main": "index.js",
+  "scripts": {
+    "suite": "node tests/suite.js",
+    "lint": "eslint tests/*.js tests/**/*.js",
+    "assert:browser": "echo 'TODO'",
+    "assert:node": "node ./tests/node.js",
+    "preassert": "npm run suite",
+    "assert": "npm run assert:node && npm run assert:browser",
+    "test": "npm run lint && npm run assert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunoscopelliti/promise.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brunoscopelliti/promise/issues"
+  },
+  "homepage": "https://github.com/brunoscopelliti/promise#readme",
+  "dependencies": {
+    "eslint": "4.11.0",
+    "eslint-config-bruno": "1.1.1",
+    "glob": "7.1.2",
+    "pre-commit": "1.2.2"
+  }
+}
