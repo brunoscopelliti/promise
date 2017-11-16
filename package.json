@@ -7,7 +7,7 @@
     "suite": "node tests/suite.js && node tests/compiler.js",
     "lint": "eslint tests/*.js tests/**/*.js",
     "preassert:browser": "browserify ./tests/node.js -o ./tests/browser.js",
-    "assert:browser": "echo 'TODO'",
+    "assert:browser": "open ./tests/browser.html",
     "assert:node": "node ./tests/node.js",
     "preassert": "npm run suite",
     "assert": "npm run assert:node && npm run assert:browser",
@@ -30,6 +30,7 @@
     "eslint-config-bruno": "1.1.1",
     "glob": "7.1.2",
     "handlebars": "4.0.11",
+    "open": "0.0.5",
     "pre-commit": "1.2.2"
   }
 }
