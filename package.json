@@ -4,8 +4,9 @@
   "description": "A `Promise` implementation spec-complaint optimised for readability.",
   "main": "index.js",
   "scripts": {
-    "suite": "node tests/suite.js",
+    "suite": "node tests/suite.js && node tests/compiler.js",
     "lint": "eslint tests/*.js tests/**/*.js",
+    "preassert:browser": "browserify ./tests/node.js -o ./tests/browser.js",
     "assert:browser": "echo 'TODO'",
     "assert:node": "node ./tests/node.js",
     "preassert": "npm run suite",
@@ -24,9 +25,11 @@
   },
   "homepage": "https://github.com/brunoscopelliti/promise#readme",
   "dependencies": {
+    "browserify": "14.5.0",
     "eslint": "4.11.0",
     "eslint-config-bruno": "1.1.1",
     "glob": "7.1.2",
+    "handlebars": "4.0.11",
     "pre-commit": "1.2.2"
   }
 }

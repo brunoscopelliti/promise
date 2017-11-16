@@ -60,3 +60,5 @@ typings/
 
 
 tests/suite/index.json
+tests/browser.js
+tests/node.js
