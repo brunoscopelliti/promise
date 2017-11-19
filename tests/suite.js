@@ -8,6 +8,6 @@ glob("tests/suite/*.js", (err, files) => {
   }
   fs.writeFileSync("tests/suite/index.json",
     JSON.stringify({
-      files: files.map((file) => path.resolve(process.cwd(), file))
+      files: files.sort().map((file) => path.resolve(process.cwd(), file))
     }, null, 2));
 });
