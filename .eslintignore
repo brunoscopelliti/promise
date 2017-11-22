@@ -1,1 +1,2 @@
 tests/browser.js
+tests/integ/comparison.js
