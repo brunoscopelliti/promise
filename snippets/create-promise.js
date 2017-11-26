@@ -1,5 +1,8 @@
 const promise = new Promise(
   (resolve, reject) => {
-    // stuff
+    // stuff ...
+    resolve(42);
   }
 );
+
+console.log("Promise:", promise);
