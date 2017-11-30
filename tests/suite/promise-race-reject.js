@@ -1,11 +1,11 @@
-/// Promise.race returns a promise that resolves or rejects as soon
-/// as one of the promises in the iterable resolves or rejects,
-/// with the value or reason from that promise.
+/// Promise.race returns a promise,
+/// that gets rejected in case the promise in the iterable,
+/// that has firstly its fate defined, is rejected
 
 "use strict";
 
 const Promise = require("../../");
-const TEST = "Promise.race resolve plain value";
+const TEST = "Promise.race reject";
 
 const assert = require("assert");
 
