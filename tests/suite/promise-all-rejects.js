@@ -7,6 +7,8 @@ const TEST = "Promise.all rejects";
 
 const assert = require("assert");
 
+const unexpectedFulfillment = require("./helpers/unexpected-fulfillment");
+
 const chalk = require("chalk");
 const OK = chalk.bold.green("OK");
 const FAIL = chalk.bold.red("FAIL");
@@ -34,6 +36,6 @@ const p2 = new Promise((resolve, reject) => {
 });
 
 const promise = Promise.all([p1, p2]);
-promise.catch(validate);
+promise.then(unexpectedFulfillment, validate);
 
 assert.strictEqual(promise.constructor, Promise);
