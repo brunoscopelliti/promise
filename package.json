@@ -28,7 +28,7 @@
     "browserify": "14.5.0",
     "chalk": "2.3.0",
     "eslint": "4.11.0",
-    "eslint-config-bruno": "1.1.1",
+    "eslint-config-bruno": "1.2.0",
     "glob": "7.1.2",
     "handlebars": "4.0.11",
     "open": "0.0.5",
