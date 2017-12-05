@@ -33,11 +33,10 @@ const validate =
     console.log(`${OK} ..... ${TEST}`);
   };
 
-const promise = Promise.resolve(
-  new BuiltinPromise((resolve) => {
-    resolve(42);
-  })
-);
+const builtIn = new BuiltinPromise((resolve) => setTimeout(resolve, 100, 21))
+  .then((value) => value * 2);
+
+const promise = Promise.resolve(builtIn);
 promise.then(validate);
 
 assert.strictEqual(promise.constructor, Promise);
