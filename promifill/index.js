@@ -11,5 +11,19 @@ class Promifill {
 
     this.state = PENDING;
     this.value = void 0;
+
+    const resolve =
+      (value) => {
+        this.value = value;
+        this.state = FULFILLED; // #FIXME
+      };
+
+    const reject =
+      (reason) => {
+        this.value = reason;
+        this.state = REJECTED;
+      };
+
+    executor(resolve, reject);
   }
 }
