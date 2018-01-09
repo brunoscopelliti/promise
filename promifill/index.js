@@ -47,6 +47,10 @@ class Promifill {
         defineProperty(this, "state", REJECTED);
       };
 
-    executor(resolve, reject);
+    try {
+      executor(resolve, reject);
+    } catch (error) {
+      reject(error);
+    }
   }
 }
