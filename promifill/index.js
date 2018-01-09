@@ -23,6 +23,8 @@ class Promifill {
       throw new TypeError(`Promise resolver ${Object.prototype.toString.call(executor)} is not a function`);
     }
 
+    defineProperty(this, "observers", []);
+
     const resolve =
       (value) => {
         if (this.settled) {
@@ -52,5 +54,29 @@ class Promifill {
     } catch (error) {
       reject(error);
     }
+  }
+
+  then (onfulfill, onreject) {
+    return new this.constructor((resolve, reject) => {
+      const internalOnfulfill =
+        (value) => {
+          resolve(
+            typeof onfulfill == "function"
+              ? onfulfill(value)
+              : value
+          );
+        };
+
+      const internalOnreject =
+        (reason) => {
+          if (typeof onreject == "function") {
+            resolve(onreject(reason));
+          } else {
+            reject(reason);
+          }
+        };
+
+      this.observers.push({ onfulfill: internalOnfulfill, onreject: internalOnreject });
+    });
   }
 }
