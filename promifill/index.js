@@ -60,19 +60,27 @@ class Promifill {
     return new this.constructor((resolve, reject) => {
       const internalOnfulfill =
         (value) => {
-          resolve(
-            typeof onfulfill == "function"
-              ? onfulfill(value)
-              : value
-          );
+          try {
+            resolve(
+              typeof onfulfill == "function"
+                ? onfulfill(value)
+                : value
+            );
+          } catch (error) {
+            reject(error);
+          }
         };
 
       const internalOnreject =
         (reason) => {
-          if (typeof onreject == "function") {
-            resolve(onreject(reason));
-          } else {
-            reject(reason);
+          try {
+            if (typeof onreject == "function") {
+              resolve(onreject(reason));
+            } else {
+              reject(reason);
+            }
+          } catch (error) {
+            reject(error);
           }
         };
 
