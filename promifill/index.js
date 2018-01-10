@@ -87,4 +87,8 @@ class Promifill {
       this.observers.push({ onfulfill: internalOnfulfill, onreject: internalOnreject });
     });
   }
+
+  catch (onreject) {
+    return this.then(null, onreject);
+  }
 }
