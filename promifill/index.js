@@ -1,6 +1,7 @@
 "use strict";
 
 const defineProperty = require("./lib/define-property");
+const isThenable = require("./lib/is-thenable");
 
 const [PENDING, FULFILLED, REJECTED] =
   [void 0, true, false];
@@ -25,16 +26,35 @@ class Promifill {
 
     defineProperty(this, "observers", []);
 
+    const secret = [];
+
     const resolve =
-      (value) => {
-        if (this.settled) {
+      (value, bypassKey) => {
+        if (this.settled && bypassKey !== secret) {
           return;
         }
 
         defineProperty(this, "settled", true);
 
-        defineProperty(this, "value", value);
-        defineProperty(this, "state", FULFILLED); // #FIXME
+        const thenable = isThenable(value);
+
+        if (thenable && value.state === PENDING) {
+          value.then(
+            (v) =>
+              resolve(v, secret),
+            (r) =>
+              reject(r, secret)
+          );
+        } else {
+          defineProperty(this, "value",
+            thenable
+              ? value.value
+              : value);
+          defineProperty(this, "state",
+            thenable
+              ? value.state
+              : FULFILLED);
+        }
       };
 
     const reject =
