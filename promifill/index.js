@@ -3,6 +3,8 @@
 const defineProperty = require("./lib/define-property");
 const isThenable = require("./lib/is-thenable");
 
+const schedule = require("./scheduler");
+
 const [PENDING, FULFILLED, REJECTED] =
   [void 0, true, false];
 
@@ -54,6 +56,8 @@ class Promifill {
             thenable
               ? value.state
               : FULFILLED);
+
+          schedule(this.observers);
         }
       };
 
@@ -67,6 +71,8 @@ class Promifill {
 
         defineProperty(this, "value", reason);
         defineProperty(this, "state", REJECTED);
+
+        schedule(this.observers);
       };
 
     try {
