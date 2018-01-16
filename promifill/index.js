@@ -58,8 +58,8 @@ class Promifill {
       };
 
     const reject =
-      (reason) => {
-        if (this.settled) {
+      (reason, bypassKey) => {
+        if (this.settled && bypassKey !== secret) {
           return;
         }
 
