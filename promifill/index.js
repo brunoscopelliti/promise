@@ -80,7 +80,13 @@ class Promifill {
         defineProperty(this, "value", reason);
         defineProperty(this, "state", REJECTED);
 
-        schedule(this.observers);
+        schedule(
+          this.observers.map((observer) => (
+            {
+              handler: this.onreject,
+              value: this.value
+            }))
+        );
       };
 
     try {
