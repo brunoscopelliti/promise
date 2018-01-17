@@ -57,7 +57,15 @@ class Promifill {
               ? value.state
               : FULFILLED);
 
-          schedule(this.observers);
+          schedule(
+            this.observers.map((observer) => (
+              {
+                handler: this.state === FULFILLED
+                  ? observer.onfulfill
+                  : observer.onreject,
+                value: this.value
+              }))
+          );
         }
       };
 
