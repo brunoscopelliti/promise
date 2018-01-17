@@ -124,7 +124,18 @@ class Promifill {
           }
         };
 
-      this.observers.push({ onfulfill: internalOnfulfill, onreject: internalOnreject });
+      if (this.state === PENDING) {
+        this.observers.push({ onfulfill: internalOnfulfill, onreject: internalOnreject });
+      } else {
+        schedule(
+          [{
+            handler: this.state === FULFILLED
+              ? internalOnfulfill
+              : internalOnreject,
+            value: this.value
+          }]
+        );
+      }
     });
   }
 
