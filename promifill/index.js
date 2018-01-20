@@ -26,6 +26,7 @@ class Promifill {
       throw new TypeError(`Promise resolver ${Object.prototype.toString.call(executor)} is not a function`);
     }
 
+    defineProperty(this, "chain", []);
     defineProperty(this, "observers", []);
 
     const secret = [];
@@ -97,7 +98,7 @@ class Promifill {
   }
 
   then (onfulfill, onreject) {
-    return new this.constructor((resolve, reject) => {
+    const chainedPromise = new this.constructor((resolve, reject) => {
       const internalOnfulfill =
         (value) => {
           try {
@@ -137,6 +138,9 @@ class Promifill {
         );
       }
     });
+
+    this.chain.push(chainedPromise);
+    return chainedPromise;
   }
 
   catch (onreject) {
