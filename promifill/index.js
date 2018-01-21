@@ -68,6 +68,10 @@ class Promifill {
                 value: this.value
               }))
           );
+
+          if (this.state === REJECTED) {
+            raiseUnhandledPromiseRejectionException(this.value, this);
+          }
         }
       };
 
