@@ -2,6 +2,7 @@
 
 const defineProperty = require("./lib/define-property");
 const isThenable = require("./lib/is-thenable");
+const raiseUnhandledPromiseRejectionException = require("./lib/raise-unhandled-promise-rejection-exception");
 
 const schedule = require("./scheduler");
 
@@ -88,6 +89,8 @@ class Promifill {
               value: this.value
             }))
         );
+
+        raiseUnhandledPromiseRejectionException(this.value, this);
       };
 
     try {
