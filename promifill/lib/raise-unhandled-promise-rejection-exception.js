@@ -3,7 +3,7 @@ const thrower = require("./thrower");
 
 const raiseUnhandledPromiseRejectionException =
   defer((error, promise) => {
-    if (promise.chain.length > 0) {
+    if (promise.preventThrow || promise.chain.length > 0) {
       return;
     }
     thrower(error);

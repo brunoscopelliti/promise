@@ -42,6 +42,10 @@ class Promifill {
 
         const thenable = isThenable(value);
 
+        if (thenable) {
+          defineProperty(value, "preventThrow", true);
+        }
+
         if (thenable && value.state === PENDING) {
           value.then(
             (v) =>
