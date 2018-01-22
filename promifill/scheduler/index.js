@@ -1,3 +1,5 @@
+const MutationObserverStrategy = require("./strategies/mutation-observer");
+
 const schedule =
   (() => {
     let microtasks = [];
@@ -10,10 +12,7 @@ const schedule =
         }
       };
 
-    const observer = new MutationObserver(run);
-    const node = document.createTextNode("");
-
-    observer.observe(node, { characterData: true });
+    const ctrl = new MutationObserverStrategy(run);
 
     return (observers) => {
       if (observers.length == 0) {
@@ -23,9 +22,7 @@ const schedule =
       microtasks = microtasks.concat(observers);
       observers.length = 0;
 
-      node.data = node.data === 1
-        ? 0
-        : 1;
+      ctrl.trigger();
     };
   })();
 
