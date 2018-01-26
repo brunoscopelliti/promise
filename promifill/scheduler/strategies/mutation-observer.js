@@ -13,4 +13,4 @@ class MutationObserverStrategy {
   }
 }
 
-export default MutationObserverStrategy;
+module.exports = MutationObserverStrategy;

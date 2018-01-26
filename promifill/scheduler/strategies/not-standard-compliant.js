@@ -9,4 +9,4 @@ class BetterThanNothingStrategy {
   }
 }
 
-export default BetterThanNothingStrategy;
+module.exports = BetterThanNothingStrategy;

@@ -9,4 +9,4 @@ class NextTickStrategy {
   }
 }
 
-export default NextTickStrategy;
+module.exports = NextTickStrategy;
