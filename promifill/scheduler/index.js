@@ -1,4 +1,18 @@
 const MutationObserverStrategy = require("./strategies/mutation-observer");
+const NextTickStrategy = require("./strategies/next-tick");
+const BetterThanNothingStrategy = require("./strategies/not-standard-compliant");
+
+const getStrategy =
+  () => {
+    if (typeof window != "undefined" && typeof window.MutationObserver == "function") {
+      return MutationObserverStrategy;
+    }
+    if (typeof global != "undefined" && typeof process != "undefined" && typeof process.nextTick == "function") {
+      return NextTickStrategy;
+    }
+
+    return BetterThanNothingStrategy;
+  };
 
 const schedule =
   (() => {
@@ -12,7 +26,8 @@ const schedule =
         }
       };
 
-    const ctrl = new MutationObserverStrategy(run);
+    const Strategy = getStrategy();
+    const ctrl = new Strategy(run);
 
     return (observers) => {
       if (observers.length == 0) {
