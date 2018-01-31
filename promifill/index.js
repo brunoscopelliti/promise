@@ -165,4 +165,10 @@ class Promifill {
         resolve(value);
       });
   }
+
+  static reject (reason) {
+    return new Promifill((_, reject) => {
+      reject(reason);
+    });
+  }
 }
