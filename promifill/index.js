@@ -157,4 +157,12 @@ class Promifill {
   catch (onreject) {
     return this.then(null, onreject);
   }
+
+  static resolve (value) {
+    return value && value.constructor === Promifill
+      ? value
+      : new Promifill((resolve) => {
+        resolve(value);
+      });
+  }
 }
