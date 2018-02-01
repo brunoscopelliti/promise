@@ -171,4 +171,25 @@ class Promifill {
       reject(reason);
     });
   }
+
+  static all (iterable) {
+    return new Promifill((resolve, reject) => {
+      let iterableSize = 0;
+      const values = [];
+
+      for (let k in iterable) {
+        if (Object.prototype.hasOwnProperty.call(iterable, k)) {
+          ((entry, index) => {
+            Promifill.resolve(entry)
+              .then(
+                (value) => {
+                  // @todo
+                },
+                reject
+              );
+          })(iterable[k], iterableSize++);
+        }
+      }
+    });
+  }
 }
