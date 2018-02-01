@@ -177,14 +177,21 @@ class Promifill {
       let iterableSize = 0;
       const values = [];
 
+      const add =
+        (value, index) => {
+          values[index] = value;
+          if (values.length === iterableSize) {
+            resolve(values);
+          }
+        };
+
       for (let k in iterable) {
         if (Object.prototype.hasOwnProperty.call(iterable, k)) {
           ((entry, index) => {
             Promifill.resolve(entry)
               .then(
-                (value) => {
-                  // @todo
-                },
+                (value) =>
+                  add(value, index),
                 reject
               );
           })(iterable[k], iterableSize++);
