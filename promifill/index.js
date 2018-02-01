@@ -180,7 +180,7 @@ class Promifill {
       const add =
         (value, index) => {
           values[index] = value;
-          if (values.length === iterableSize) {
+          if (values.filter(() => true).length === iterableSize) {
             resolve(values);
           }
         };
