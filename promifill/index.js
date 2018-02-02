@@ -199,4 +199,15 @@ class Promifill {
       }
     });
   }
+
+  static race (iterable) {
+    return new Promifill((resolve, reject) => {
+      for (let k in iterable) {
+        if (Object.prototype.hasOwnProperty(iterable, k)) {
+          Promifill.resolve(iterable)
+            .then(resolve, reject);
+        }
+      }
+    });
+  }
 }
