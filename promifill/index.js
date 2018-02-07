@@ -158,6 +158,35 @@ class Promifill {
     return this.then(null, onreject);
   }
 
+  finally (oncomplete) {
+    const chainedPromise = new this.constructor((resolve, reject) => {
+      const internalOncomplete =
+        () => {
+          try {
+            oncomplete();
+            if (this.state === FULFILLED) {
+              resolve(this.value);
+            } else {
+              reject(this.value);
+            }
+          } catch (error) {
+            reject(error);
+          }
+        };
+
+      if (this.state === PENDING) {
+        this.observers.push({ onfulfill: internalOncomplete, onreject: internalOncomplete });
+      } else {
+        schedule([{
+          handler: internalOncomplete
+        }]);
+      }
+    });
+
+    this.chain.push(chainedPromise);
+    return chainedPromise;
+  }
+
   static resolve (value) {
     return value && value.constructor === Promifill
       ? value
