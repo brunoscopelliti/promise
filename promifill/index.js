@@ -4,6 +4,9 @@ const defineProperty = require("./lib/define-property");
 const isThenable = require("./lib/is-thenable");
 const raiseUnhandledPromiseRejectionException = require("./lib/raise-unhandled-promise-rejection-exception");
 
+const validateIterable = require("./lib/validate-iterable");
+const isEmptyIterable = require("./lib/is-empty-iterable");
+
 const schedule = require("./scheduler");
 
 const [PENDING, FULFILLED, REJECTED] =
@@ -203,8 +206,14 @@ class Promifill {
 
   static all (iterable) {
     return new Promifill((resolve, reject) => {
+      validateIterable(iterable);
+
       let iterableSize = 0;
       const values = [];
+
+      if (isEmptyIterable(iterable)) {
+        return resolve(values);
+      }
 
       const add =
         (value, index) => {
@@ -214,28 +223,30 @@ class Promifill {
           }
         };
 
-      for (let k in iterable) {
-        if (Object.prototype.hasOwnProperty.call(iterable, k)) {
-          ((entry, index) => {
-            Promifill.resolve(entry)
-              .then(
-                (value) =>
-                  add(value, index),
-                reject
-              );
-          })(iterable[k], iterableSize++);
-        }
+      for (let item of iterable) {
+        ((entry, index) => {
+          Promifill.resolve(entry)
+            .then(
+              (value) =>
+                add(value, index),
+              reject
+            );
+        })(item, iterableSize++);
       }
     });
   }
 
   static race (iterable) {
     return new Promifill((resolve, reject) => {
-      for (let k in iterable) {
-        if (Object.prototype.hasOwnProperty(iterable, k)) {
-          Promifill.resolve(iterable)
-            .then(resolve, reject);
-        }
+      validateIterable(iterable);
+
+      if (isEmptyIterable(iterable)) {
+        return;
+      }
+
+      for (let entry of iterable) {
+        Promifill.resolve(entry)
+          .then(resolve, reject);
       }
     });
   }
