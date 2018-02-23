@@ -96,7 +96,7 @@ class Promifill {
         schedule(
           this.observers.map((observer) => (
             {
-              handler: this.onreject,
+              handler: observer.onreject,
               value: this.value
             }))
         );
