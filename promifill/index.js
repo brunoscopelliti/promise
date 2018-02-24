@@ -1,7 +1,6 @@
 "use strict";
 
 const defineProperty = require("./lib/define-property");
-const isThenable = require("./lib/is-thenable");
 const raiseUnhandledPromiseRejectionException = require("./lib/raise-unhandled-promise-rejection-exception");
 
 const validateIterable = require("./lib/validate-iterable");
@@ -43,14 +42,16 @@ class Promifill {
 
         defineProperty(this, "settled", true);
 
-        const thenable = isThenable(value);
+        const then_ = value && value.then;
+        const thenable = typeof then_ == "function";
 
         if (thenable) {
           defineProperty(value, "preventThrow", true);
         }
 
         if (thenable && value.state === PENDING) {
-          value.then(
+          then_.call(
+            value,
             (v) =>
               resolve(v, secret),
             (r) =>
